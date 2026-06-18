@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Robot Architectural Diagram v2</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@300;400;600&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background:#080c10;
+    font-family:'JetBrains Mono', monospace;
+    color:#c9d1d9;
+    padding: 24px 16px 40px;
+    min-height:100vh;
+  }
+  .page-header {
+    text-align:center;
+    margin-bottom:28px;
+  }
+  .page-header .tag {
+    font-size:9px;
+    letter-spacing:0.3em;
+    color:#30a14e;
+    display:block;
+    margin-bottom:6px;
+  }
+  .page-header h1 {
+    font-family:'Space Mono', monospace;
+    font-size:15px;
+    color:#e6edf3;
+    letter-spacing:0.1em;
+    font-weight:700;
+  }
+  .page-header .sub {
+    font-size:9px;
+    color:#484f58;
+    letter-spacing:0.2em;
+    margin-top:4px;
+  }
+  .layout {
+    display:flex;
+    gap:20px;
+    max-width:1200px;
+    margin:0 auto;
+    align-items:flex-start;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  .panel {
+    background:#0d1117;
+    border:1px solid #21262d;
+    border-radius:6px;
+    padding:16px 18px;
+  }
+  .panel-title {
+    font-size:8px;
+    letter-spacing:0.25em;
+    text-transform:uppercase;
+    margin-bottom:14px;
+    padding-bottom:8px;
+    border-bottom:1px solid #21262d;
+  }
+  .legend-item {
+    display:flex;
+    gap:9px;
+    align-items:flex-start;
+    margin-bottom:11px;
+  }
+  .dot {
+    width:9px; height:9px;
+    border-radius:50%;
+    flex-shrink:0;
+    margin-top:3px;
+  }
+  .sq { border-radius:2px; }
+  .li-title { font-size:10px; color:#e6edf3; display:block; margin-bottom:1px; }
+  .li-sub { font-size:9px; color:#7d8590; line-height:1.5; }
+  .spec-row {
+    display:flex;
+    justify-content:space-between;
+    font-size:9.5px;
+    margin-bottom:7px;
+    gap:12px;
+  }
+  .sk { color:#7d8590; }
+  .sv { color:#e6edf3; font-weight:600; }
+  .pin-table { width:100%; border-collapse:collapse; font-size:9px; }
+  .pin-table th { color:#58a6ff; font-weight:600; text-align:left; padding:4px 6px; border-bottom:1px solid #21262d; }
+  .pin-table td { padding:4px 6px; color:#c9d1d9; border-bottom:1px solid #161b22; }
+  .pin-table tr:last-child td { border-bottom:none; }
+  .wire-r { color:#f85149; }
+  .wire-g { color:#3fb950; }
+  .wire-y { color:#d29922; }
+  .wire-b { color:#58a6ff; }
+  .wire-w { color:#c9d1d9; }
+  .wire-p { color:#bc8cff; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <span class="tag">ARCHITECTURAL MODEL DIAGRAM · REV 2.0</span>
+  <h1>LEGO SPIKE PRIME · LMS-ESP32 v2.0 · HUSKYLENS v2</h1>
+  <div class="sub">4-WHEEL DRIVE · DUAL ULTRASONIC · VISION AI · PEN ARM</div>
+</div>
+
+<div class="layout">
+
+<!-- ========== MAIN DIAGRAM SVG ========== -->
+<svg width="660" height="820" viewBox="0 0 660 820" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="g" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M20 0L0 0 0 20" fill="none" stroke="#0f141a" stroke-width="0.8"/>
+    </pattern>
+    <marker id="a" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L0,5 L5,2.5z" fill="#484f58"/></marker>
+    <marker id="ab" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L0,5 L5,2.5z" fill="#58a6ff"/></marker>
+    <marker id="ag" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L0,5 L5,2.5z" fill="#3fb950"/></marker>
+    <marker id="ay" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L0,5 L5,2.5z" fill="#d29922"/></marker>
+    <marker id="ap" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L0,5 L5,2.5z" fill="#bc8cff"/></marker>
+    <marker id="ar" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L0,5 L5,2.5z" fill="#f85149"/></marker>
+  </defs>
+
+  <rect width="660" height="820" fill="#080c10"/>
+  <rect width="660" height="820" fill="url(#g)"/>
+  <rect x="8" y="8" width="644" height="804" fill="none" stroke="#161b22" stroke-width="1" rx="4"/>
+
+  <!-- ====== TITLE STRIP ====== -->
+  <rect x="8" y="790" width="644" height="22" fill="#0d1117" stroke="#161b22" stroke-width="1"/>
+  <text x="18" y="804" font-family="Space Mono,monospace" font-size="8" fill="#30363d">SPIKE PRIME HUB · LMS-ESP32 v2.0 · HUSKYLENS v2 · 2× ULTRASONIC · 4WD</text>
+  <text x="600" y="804" font-family="Space Mono,monospace" font-size="8" fill="#30363d">NTS</text>
+
+  <!-- ====== SECTION: FRONT VIEW ====== -->
+  <text x="22" y="36" font-family="Space Mono,monospace" font-size="8" fill="#58a6ff" letter-spacing="3">FRONT VIEW</text>
+  <line x1="22" y1="40" x2="310" y2="40" stroke="#58a6ff" stroke-width="0.5"/>
+
+  <!-- Wheels front view -->
+  <!-- Left rear wheel (large) -->
+  <ellipse cx="60" cy="290" rx="42" ry="42" fill="none" stroke="#1c2128" stroke-width="9"/>
+  <ellipse cx="60" cy="290" rx="42" ry="42" fill="none" stroke="#30363d" stroke-width="2" stroke-dasharray="9 5"/>
+  <ellipse cx="60" cy="290" rx="26" ry="26" fill="none" stroke="#21262d" stroke-width="2"/>
+  <ellipse cx="60" cy="290" rx="7" ry="7" fill="#3d4450"/>
+  <!-- Right rear wheel -->
+  <ellipse cx="248" cy="290" rx="42" ry="42" fill="none" stroke="#1c2128" stroke-width="9"/>
+  <ellipse cx="248" cy="290" rx="42" ry="42" fill="none" stroke="#30363d" stroke-width="2" stroke-dasharray="9 5"/>
+  <ellipse cx="248" cy="290" rx="26" ry="26" fill="none" stroke="#21262d" stroke-width="2"/>
+  <ellipse cx="248" cy="290" rx="7" ry="7" fill="#3d4450"/>
+  <!-- Axle -->
+  <line x1="18" y1="290" x2="288" y2="290" stroke="#21262d" stroke-width="3"/>
+
+  <!-- Chassis body -->
+  <rect x="78" y="230" width="152" height="95" rx="4" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
+
+  <!-- SPIKE PRIME HUB (cyan-ish) -->
+  <rect x="84" y="236" width="140" height="50" rx="3" fill="#001a2e" stroke="#0969da" stroke-width="1.5"/>
+  <!-- Spike Prime button -->
+  <circle cx="154" cy="261" r="12" fill="#0d1117" stroke="#0969da" stroke-width="1.5"/>
+  <circle cx="154" cy="261" r="7" fill="#1158a7" opacity="0.8"/>
+  <!-- Port labels -->
+  <text x="154" y="266" font-family="Space Mono,monospace" font-size="7" fill="#58a6ff" text-anchor="middle">SPIKE</text>
+  <text x="154" y="297" font-family="Space Mono,monospace" font-size="7" fill="#0969da" text-anchor="middle">PRIME HUB</text>
+
+  <!-- LMS-ESP32 board -->
+  <rect x="84" y="290" width="140" height="30" rx="2" fill="#0a1a0a" stroke="#3fb950" stroke-width="1.2"/>
+  <text x="154" y="310" font-family="Space Mono,monospace" font-size="7" fill="#3fb950" text-anchor="middle">LMS-ESP32 v2.0</text>
+
+  <!-- Front sensor bar -->
+  <rect x="84" y="322" width="140" height="10" rx="1" fill="#161b22" stroke="#21262d" stroke-width="1"/>
+
+  <!-- ===== DUAL ULTRASONIC SENSORS (front) ===== -->
+  <!-- Left US sensor -->
+  <rect x="70" y="335" width="52" height="28" rx="3" fill="#101820" stroke="#58a6ff" stroke-width="1.5"/>
+  <circle cx="84" cy="349" r="8" fill="none" stroke="#58a6ff" stroke-width="1.5"/>
+  <circle cx="84" cy="349" r="3.5" fill="#58a6ff" opacity="0.35"/>
+  <circle cx="107" cy="349" r="8" fill="none" stroke="#58a6ff" stroke-width="1.5"/>
+  <circle cx="107" cy="349" r="3.5" fill="#58a6ff" opacity="0.35"/>
+  <text x="96" y="374" font-family="Space Mono,monospace" font-size="7" fill="#58a6ff" text-anchor="middle">US-L</text>
+
+  <!-- Right US sensor -->
+  <rect x="186" y="335" width="52" height="28" rx="3" fill="#101820" stroke="#58a6ff" stroke-width="1.5"/>
+  <circle cx="200" cy="349" r="8" fill="none" stroke="#58a6ff" stroke-width="1.5"/>
+  <circle cx="200" cy="349" r="3.5" fill="#58a6ff" opacity="0.35"/>
+  <circle cx="223" cy="349" r="8" fill="none" stroke="#58a6ff" stroke-width="1.5"/>
+  <circle cx="223" cy="349" r="3.5" fill="#58a6ff" opacity="0.35"/>
+  <text x="212" y="374" font-family="Space Mono,monospace" font-size="7" fill="#58a6ff" text-anchor="middle">US-R</text>
+
+  <!-- HuskyLens camera (center, elevated) -->
+  <rect x="122" y="382" width="64" height="44" rx="4" fill="#1a0a2e" stroke="#bc8cff" stroke-width="2"/>
+  <!-- lens -->
+  <circle cx="154" cy="404" r="14" fill="#0d0818" stroke="#bc8cff" stroke-width="1.5"/>
+  <circle cx="154" cy="404" r="9" fill="#140a24" stroke="#8b5cf6" stroke-width="1"/>
+  <circle cx="154" cy="404" r="4" fill="#bc8cff" opacity="0.5"/>
+  <circle cx="149" cy="399" r="2" fill="white" opacity="0.3"/>
+  <text x="154" y="436" font-family="Space Mono,monospace" font-size="7" fill="#bc8cff" text-anchor="middle">HUSKYLENS v2</text>
+
+  <!-- Vertical arm post (front view) -->
+  <rect x="196" y="120" width="11" height="110" rx="2" fill="#161b22" stroke="#21262d" stroke-width="1.5"/>
+  <!-- Cross brace -->
+  <line x1="168" y1="165" x2="207" y2="145" stroke="#21262d" stroke-width="1.5"/>
+  <line x1="168" y1="145" x2="207" y2="165" stroke="#21262d" stroke-width="1.5"/>
+
+  <!-- Servo on arm -->
+  <rect x="183" y="84" width="38" height="38" rx="3" fill="#161b22" stroke="#484f58" stroke-width="2"/>
+  <rect x="193" y="76" width="18" height="10" rx="2" fill="#21262d" stroke="#484f58" stroke-width="1"/>
+  <text x="202" y="107" font-family="Space Mono,monospace" font-size="6" fill="#7d8590" text-anchor="middle">SERVO</text>
+
+  <!-- Wires front view -->
+  <path d="M202 122 Q200 160 200 230" stroke="#f85149" stroke-width="1" fill="none" opacity="0.7"/>
+  <path d="M204 122 Q202 162 202 230" stroke="#3fb950" stroke-width="1" fill="none" opacity="0.7"/>
+  <path d="M206 122 Q204 164 204 230" stroke="#d29922" stroke-width="1" fill="none" opacity="0.7"/>
+
+  <!-- Dimension lines front -->
+  <line x1="18" y1="242" x2="18" y2="348" stroke="#484f58" stroke-width="0.5" stroke-dasharray="3 2"/>
+  <line x1="288" y1="242" x2="288" y2="348" stroke="#484f58" stroke-width="0.5" stroke-dasharray="3 2"/>
+  <line x1="18" y1="360" x2="288" y2="360" stroke="#484f58" stroke-width="0.5" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="153" y="373" font-family="Space Mono,monospace" font-size="7.5" fill="#484f58" text-anchor="middle">≈ 200mm</text>
+
+  <!-- ====== SECTION: SIDE VIEW ====== -->
+  <text x="330" y="36" font-family="Space Mono,monospace" font-size="8" fill="#3fb950" letter-spacing="3">SIDE VIEW  (RIGHT)</text>
+  <line x1="330" y1="40" x2="648" y2="40" stroke="#3fb950" stroke-width="0.5"/>
+
+  <!-- Front small wheel -->
+  <ellipse cx="390" cy="305" rx="30" ry="30" fill="none" stroke="#1c2128" stroke-width="7"/>
+  <ellipse cx="390" cy="305" rx="30" ry="30" fill="none" stroke="#30363d" stroke-width="1.5" stroke-dasharray="7 4"/>
+  <ellipse cx="390" cy="305" rx="17" ry="17" fill="none" stroke="#21262d" stroke-width="1.5"/>
+  <ellipse cx="390" cy="305" rx="5" ry="5" fill="#3d4450"/>
+
+  <!-- Rear large wheel -->
+  <ellipse cx="588" cy="305" rx="42" ry="42" fill="none" stroke="#1c2128" stroke-width="9"/>
+  <ellipse cx="588" cy="305" rx="42" ry="42" fill="none" stroke="#30363d" stroke-width="2" stroke-dasharray="9 5"/>
+  <ellipse cx="588" cy="305" rx="26" ry="26" fill="none" stroke="#21262d" stroke-width="2"/>
+  <ellipse cx="588" cy="305" rx="7" ry="7" fill="#3d4450"/>
+
+  <!-- Ground line -->
+  <line x1="340" y1="347" x2="648" y2="347" stroke="#161b22" stroke-width="1.5" stroke-dasharray="6 3"/>
+
+  <!-- Chassis side -->
+  <rect x="395" y="245" width="185" height="90" rx="4" fill="#0d1117" stroke="#30363d" stroke-width="1.5"/>
+
+  <!-- SPIKE PRIME label side -->
+  <rect x="402" y="251" width="171" height="40" rx="3" fill="#001a2e" stroke="#0969da" stroke-width="1.2"/>
+  <text x="487" y="270" font-family="Space Mono,monospace" font-size="7" fill="#58a6ff" text-anchor="middle">LEGO SPIKE PRIME</text>
+  <text x="487" y="283" font-family="Space Mono,monospace" font-size="7" fill="#0969da" text-anchor="middle">6× PORT  USB-C  BT</text>
+
+  <!-- LMS-ESP32 side strip -->
+  <rect x="402" y="295" width="171" height="22" rx="2" fill="#0a1a0a" stroke="#3fb950" stroke-width="1.2"/>
+  <text x="487" y="310" font-family="Space Mono,monospace" font-size="7" fill="#3fb950" text-anchor="middle">LMS-ESP32 v2.0  (UART/I2C)</text>
+
+  <!-- HuskyLens side view -->
+  <rect x="358" y="308" width="38" height="30" rx="3" fill="#1a0a2e" stroke="#bc8cff" stroke-width="1.5"/>
+  <circle cx="377" cy="323" r="10" fill="#0d0818" stroke="#bc8cff" stroke-width="1.5"/>
+  <circle cx="377" cy="323" r="6" fill="#140a24" stroke="#8b5cf6" stroke-width="1"/>
+  <circle cx="377" cy="323" r="3" fill="#bc8cff" opacity="0.5"/>
+
+  <!-- US sensor side left -->
+  <rect x="358" y="278" width="30" height="20" rx="2" fill="#101820" stroke="#58a6ff" stroke-width="1.2"/>
+  <circle cx="368" cy="288" r="6" fill="none" stroke="#58a6ff" stroke-width="1.2"/>
+  <circle cx="383" cy="288" r="6" fill="none" stroke="#58a6ff" stroke-width="1.2"/>
+
+  <!-- Arm structure (side view) -->
+  <!-- Vertical post -->
+  <rect x="540" y="138" width="11" height="107" rx="2" fill="#161b22" stroke="#21262d" stroke-width="1.5"/>
+  <!-- Horizontal arm -->
+  <rect x="360" y="178" width="187" height="11" rx="2" fill="#161b22" stroke="#21262d" stroke-width="1.5"/>
+  <!-- Diagonal brace -->
+  <line x1="362" y1="189" x2="540" y2="245" stroke="#21262d" stroke-width="2"/>
+  <line x1="440" y1="178" x2="540" y2="138" stroke="#21262d" stroke-width="1.5"/>
+
+  <!-- Pen end -->
+  <rect x="342" y="176" width="22" height="15" rx="2" fill="#2d2000" stroke="#d29922" stroke-width="1.5"/>
+  <polygon points="342,176 342,191 331,183.5" fill="#d29922"/>
+
+  <!-- Servo side -->
+  <rect x="530" y="100" width="40" height="40" rx="3" fill="#161b22" stroke="#484f58" stroke-width="2"/>
+  <rect x="541" y="91" width="18" height="10" rx="2" fill="#21262d" stroke="#484f58" stroke-width="1"/>
+  <text x="550" y="124" font-family="Space Mono,monospace" font-size="6" fill="#7d8590" text-anchor="middle">SERVO</text>
+
+  <!-- Wires side view -->
+  <path d="M550 140 Q548 185 545 245" stroke="#f85149" stroke-width="1" fill="none" opacity="0.6"/>
+  <path d="M553 140 Q551 187 548 245" stroke="#3fb950" stroke-width="1" fill="none" opacity="0.6"/>
+  <path d="M556 140 Q554 189 551 245" stroke="#d29922" stroke-width="1" fill="none" opacity="0.6"/>
+  <path d="M559 140 Q557 192 554 245" stroke="#e8e8e8" stroke-width="1" fill="none" opacity="0.35"/>
+
+  <!-- Drive motor (under chassis) -->
+  <rect x="490" y="338" width="52" height="22" rx="2" fill="#1a1400" stroke="#d29922" stroke-width="1.2"/>
+  <text x="516" y="352" font-family="Space Mono,monospace" font-size="6.5" fill="#d29922" text-anchor="middle">DC MTR</text>
+  <circle cx="560" cy="349" r="10" fill="none" stroke="#484f58" stroke-width="1.5"/>
+  <circle cx="560" cy="349" r="5" fill="#21262d"/>
+
+  <!-- Dimension side view -->
+  <line x1="360" y1="250" x2="360" y2="398" stroke="#484f58" stroke-width="0.5" stroke-dasharray="3 2"/>
+  <line x1="630" y1="268" x2="630" y2="398" stroke="#484f58" stroke-width="0.5" stroke-dasharray="3 2"/>
+  <line x1="360" y1="394" x2="630" y2="394" stroke="#484f58" stroke-width="0.5" marker-start="url(#a)" marker-end="url(#a)"/>
+  <text x="495" y="408" font-family="Space Mono,monospace" font-size="7.5" fill="#484f58" text-anchor="middle">≈ 280mm  (wheelbase)</text>
+
+  <!-- ====== CALLOUT ANNOTATIONS ====== -->
+  <!-- Servo callout left -->
+  <line x1="183" y1="100" x2="118" y2="72" stroke="#484f58" stroke-width="0.6" stroke-dasharray="4 2" marker-end="url(#a)"/>
+  <text x="22" y="65" font-family="Space Mono,monospace" font-size="8" fill="#7d8590">SERVO MOTOR</text>
+  <text x="22" y="75" font-family="Space Mono,monospace" font-size="7" fill="#484f58">(arm elevation)</text>
+
+  <!-- HuskyLens callout -->
+  <line x1="154" y1="426" x2="154" y2="460" stroke="#bc8cff" stroke-width="0.7" stroke-dasharray="4 2" marker-end="url(#ap)"/>
+  <text x="90" y="472" font-family="Space Mono,monospace" font-size="8" fill="#bc8cff">HUSKYLENS v2</text>
+  <text x="90" y="483" font-family="Space Mono,monospace" font-size="7" fill="#7d8590">VISION / FACE / OBJECT</text>
+
+  <!-- US-L callout -->
+  <line x1="96" y1="335" x2="48" y2="310" stroke="#58a6ff" stroke-width="0.6" stroke-dasharray="4 2" marker-end="url(#ab)"/>
+  <text x="22" y="303" font-family="Space Mono,monospace" font-size="7" fill="#58a6ff">ULTRASONIC L</text>
+  <text x="22" y="313" font-family="Space Mono,monospace" font-size="7" fill="#484f58">PORT A · SPIKE</text>
+
+  <!-- US-R callout -->
+  <line x1="212" y1="335" x2="262" y2="310" stroke="#58a6ff" stroke-width="0.6" stroke-dasharray="4 2" marker-end="url(#ab)"/>
+  <text x="265" y="303" font-family="Space Mono,monospace" font-size="7" fill="#58a6ff">ULTRASONIC R</text>
+  <text x="265" y="313" font-family="Space Mono,monospace" font-size="7" fill="#484f58">PORT B · SPIKE</text>
+
+  <!-- Spike Prime callout -->
+  <line x1="154" y1="236" x2="80" y2="210" stroke="#0969da" stroke-width="0.6" stroke-dasharray="4 2" marker-end="url(#ab)"/>
+  <text x="22" y="198" font-family="Space Mono,monospace" font-size="7.5" fill="#0969da">SPIKE PRIME HUB</text>
+  <text x="22" y="209" font-family="Space Mono,monospace" font-size="7" fill="#484f58">LEGO · 6 PORTS · BT</text>
+
+  <!-- LMS-ESP32 callout -->
+  <line x1="200" y1="305" x2="266" y2="290" stroke="#3fb950" stroke-width="0.6" stroke-dasharray="4 2" marker-end="url(#ag)"/>
+  <text x="268" y="282" font-family="Space Mono,monospace" font-size="7.5" fill="#3fb950">LMS-ESP32 v2.0</text>
+  <text x="268" y="292" font-family="Space Mono,monospace" font-size="7" fill="#484f58">ESP32 + SPIKE BRIDGE</text>
+
+  <!-- Pen callout right -->
+  <line x1="540" y1="183" x2="610" y2="160" stroke="#d29922" stroke-width="0.6" stroke-dasharray="4 2" marker-end="url(#ay)"/>
+  <text x="612" y="153" font-family="Space Mono,monospace" font-size="8" fill="#d29922">TECHNIC ARM</text>
+  <text x="612" y="163" font-family="Space Mono,monospace" font-size="7" fill="#484f58">BEAM + BRACE</text>
+
+  <line x1="342" y1="184" x2="330" y2="158" stroke="#d29922" stroke-width="0.6" stroke-dasharray="4 2" marker-end="url(#ay)"/>
+  <text x="330" y="148" font-family="Space Mono,monospace" font-size="8" fill="#d29922">PEN END</text>
+  <text x="330" y="158" font-family="Space Mono,monospace" font-size="7" fill="#484f58">EFFECTOR</text>
+
+  <!-- ====== SYSTEM BLOCK DIAGRAM ====== -->
+  <rect x="18" y="500" width="624" height="280" rx="4" fill="#0a0e14" stroke="#161b22" stroke-width="1"/>
+  <text x="330" y="522" font-family="Space Mono,monospace" font-size="9" fill="#58a6ff" text-anchor="middle" letter-spacing="3">SYSTEM ARCHITECTURE</text>
+  <line x1="18" y1="528" x2="642" y2="528" stroke="#161b22" stroke-width="0.8"/>
+
+  <!-- POWER -->
+  <rect x="30" y="537" width="88" height="36" rx="3" fill="#0d1117" stroke="#3fb950" stroke-width="1.2"/>
+  <text x="74" y="553" font-family="Space Mono,monospace" font-size="7.5" fill="#3fb950" text-anchor="middle">LEGO BATTERY</text>
+  <text x="74" y="565" font-family="Space Mono,monospace" font-size="6.5" fill="#484f58" text-anchor="middle">7.2V PACK</text>
+
+  <!-- SPIKE PRIME HUB center-top -->
+  <rect x="244" y="537" width="172" height="36" rx="3" fill="#0d1117" stroke="#0969da" stroke-width="1.8"/>
+  <text x="330" y="553" font-family="Space Mono,monospace" font-size="7.5" fill="#58a6ff" text-anchor="middle">LEGO SPIKE PRIME HUB</text>
+  <text x="330" y="565" font-family="Space Mono,monospace" font-size="6.5" fill="#0969da" text-anchor="middle">ARM9 · MicroPython · BT · USB</text>
+
+  <!-- LMS-ESP32 -->
+  <rect x="244" y="603" width="172" height="36" rx="3" fill="#0d1117" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="330" y="619" font-family="Space Mono,monospace" font-size="7.5" fill="#3fb950" text-anchor="middle">LMS-ESP32 v2.0</text>
+  <text x="330" y="631" font-family="Space Mono,monospace" font-size="6.5" fill="#484f58" text-anchor="middle">ESP32 · UART · I2C · WIFI · BT</text>
+
+  <!-- HuskyLens -->
+  <rect x="30" y="603" width="100" height="36" rx="3" fill="#0d1117" stroke="#bc8cff" stroke-width="1.5"/>
+  <text x="80" y="619" font-family="Space Mono,monospace" font-size="7.5" fill="#bc8cff" text-anchor="middle">HUSKYLENS v2</text>
+  <text x="80" y="631" font-family="Space Mono,monospace" font-size="6.5" fill="#484f58" text-anchor="middle">VISION AI · I2C/UART</text>
+
+  <!-- US Left -->
+  <rect x="30" y="669" width="100" height="36" rx="3" fill="#0d1117" stroke="#58a6ff" stroke-width="1.2"/>
+  <text x="80" y="685" font-family="Space Mono,monospace" font-size="7.5" fill="#58a6ff" text-anchor="middle">ULTRASONIC L</text>
+  <text x="80" y="697" font-family="Space Mono,monospace" font-size="6.5" fill="#484f58" text-anchor="middle">PORT A · SPIKE</text>
+
+  <!-- US Right -->
+  <rect x="150" y="669" width="100" height="36" rx="3" fill="#0d1117" stroke="#58a6ff" stroke-width="1.2"/>
+  <text x="200" y="685" font-family="Space Mono,monospace" font-size="7.5" fill="#58a6ff" text-anchor="middle">ULTRASONIC R</text>
+  <text x="200" y="697" font-family="Space Mono,monospace" font-size="6.5" fill="#484f58" text-anchor="middle">PORT B · SPIKE</text>
+
+  <!-- Motor Driver -->
+  <rect x="450" y="603" width="100" height="36" rx="3" fill="#0d1117" stroke="#484f58" stroke-width="1.2"/>
+  <text x="500" y="619" font-family="Space Mono,monospace" font-size="7.5" fill="#c9d1d9" text-anchor="middle">MOTOR DRIVER</text>
+  <text x="500" y="631" font-family="Space Mono,monospace" font-size="6.5" fill="#484f58" text-anchor="middle">H-BRIDGE · ESP32</text>
+
+  <!-- Servo -->
+  <rect x="450" y="669" width="100" height="36" rx="3" fill="#0d1117" stroke="#484f58" stroke-width="1.2"/>
+  <text x="500" y="685" font-family="Space Mono,monospace" font-size="7.5" fill="#c9d1d9" text-anchor="middle">SERVO MOTOR</text>
+  <text x="500" y="697" font-family="Space Mono,monospace" font-size="6.5" fill="#484f58" text-anchor="middle">ARM · PWM</text>
+
+  <!-- DC Motors L+R -->
+  <rect x="270" y="669" width="100" height="36" rx="3" fill="#0d1117" stroke="#d29922" stroke-width="1.2"/>
+  <text x="320" y="685" font-family="Space Mono,monospace" font-size="7.5" fill="#d29922" text-anchor="middle">DC MOTOR L+R</text>
+  <text x="320" y="697" font-family="Space Mono,monospace" font-size="6.5" fill="#484f58" text-anchor="middle">DRIVE WHEELS</text>
+
+  <!-- Pen -->
+  <rect x="390" y="669" width="50" height="36" rx="3" fill="#0d1117" stroke="#d29922" stroke-width="1"/>
+  <text x="415" y="685" font-family="Space Mono,monospace" font-size="7" fill="#d29922" text-anchor="middle">PEN</text>
+  <text x="415" y="697" font-family="Space Mono,monospace" font-size="6" fill="#484f58" text-anchor="middle">EFFECTOR</text>
+
+  <!-- Connection lines block diagram -->
+  <!-- Battery → Spike -->
+  <line x1="118" y1="555" x2="244" y2="555" stroke="#3fb950" stroke-width="1.2" marker-end="url(#ag)"/>
+  <!-- Spike → LMS-ESP32 (UART) -->
+  <line x1="330" y1="573" x2="330" y2="603" stroke="#0969da" stroke-width="1.5" marker-end="url(#ab)"/>
+  <text x="336" y="592" font-family="Space Mono,monospace" font-size="6.5" fill="#0969da">UART</text>
+  <!-- Spike → US-L -->
+  <line x1="258" y1="573" x2="130" y2="669" stroke="#58a6ff" stroke-width="1" stroke-dasharray="4 2" marker-end="url(#ab)"/>
+  <!-- Spike → US-R -->
+  <line x1="270" y1="573" x2="200" y2="669" stroke="#58a6ff" stroke-width="1" stroke-dasharray="4 2" marker-end="url(#ab)"/>
+  <!-- LMS → HuskyLens (I2C) -->
+  <line x1="244" y1="621" x2="130" y2="621" stroke="#bc8cff" stroke-width="1" marker-end="url(#ap)"/>
+  <text x="162" y="617" font-family="Space Mono,monospace" font-size="6.5" fill="#bc8cff">I2C</text>
+  <!-- LMS → Motor Driver -->
+  <line x1="416" y1="621" x2="450" y2="621" stroke="#484f58" stroke-width="1" marker-end="url(#a)"/>
+  <!-- Motor Driver → DC Motors -->
+  <line x1="500" y1="639" x2="370" y2="669" stroke="#d29922" stroke-width="1" marker-end="url(#ay)"/>
+  <!-- Motor Driver → Servo -->
+  <line x1="500" y1="639" x2="500" y2="669" stroke="#484f58" stroke-width="1" marker-end="url(#a)"/>
+  <!-- Motor Driver → Pen -->
+  <line x1="480" y1="639" x2="430" y2="669" stroke="#d29922" stroke-width="1" stroke-dasharray="3 2" marker-end="url(#ay)"/>
+</svg>
+
+<!-- ========== RIGHT PANEL ========== -->
+<div style="display:flex; flex-direction:column; gap:14px; max-width:260px;">
+
+  <div class="panel">
+    <div class="panel-title" style="color:#0969da;">Component Key</div>
+
+    <div class="legend-item">
+      <div class="dot" style="background:#0969da;"></div>
+      <div><span class="li-title">LEGO SPIKE Prime Hub</span><span class="li-sub">Main brain. ARM9 processor, runs MicroPython. 6 sensor/motor ports, Bluetooth, USB-C charging.</span></div>
+    </div>
+    <div class="legend-item">
+      <div class="dot" style="background:#3fb950;"></div>
+      <div><span class="li-title">LMS-ESP32 v2.0</span><span class="li-sub">Co-processor bridge board. Plugs into SPIKE via UART. Provides WiFi, extra GPIO, I2C, and ESP32 processing power.</span></div>
+    </div>
+    <div class="legend-item">
+      <div class="dot" style="background:#bc8cff;"></div>
+      <div><span class="li-title">HuskyLens v2</span><span class="li-sub">AI vision camera. Face recognition, object tracking, color/line detection. Connected to LMS-ESP32 via I2C or UART.</span></div>
+    </div>
+    <div class="legend-item">
+      <div class="dot" style="background:#58a6ff;"></div>
+      <div><span class="li-title">Ultrasonic × 2</span><span class="li-sub">Left + Right sensors. SPIKE Prime distance sensors. Port A (left) and Port B (right) for dual-side obstacle detection.</span></div>
+    </div>
+    <div class="legend-item">
+      <div class="dot sq" style="background:#d29922;"></div>
+      <div><span class="li-title">Pen Arm + Servo</span><span class="li-sub">Lego Technic beam arm. Servo lifts/lowers pen. Controlled via LMS-ESP32 PWM pin.</span></div>
+    </div>
+    <div class="legend-item">
+      <div class="dot" style="background:#484f58;"></div>
+      <div><span class="li-title">DC Drive Motors</span><span class="li-sub">Left + right independent drive. H-bridge motor driver on ESP32 side for speed/direction control.</span></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title" style="color:#3fb950;">Specs</div>
+    <div class="spec-row"><span class="sk">Hub</span><span class="sv">SPIKE Prime</span></div>
+    <div class="spec-row"><span class="sk">Co-CPU</span><span class="sv">ESP32 (LMS v2)</span></div>
+    <div class="spec-row"><span class="sk">Vision</span><span class="sv">HuskyLens v2</span></div>
+    <div class="spec-row"><span class="sk">Ultrasonic</span><span class="sv">×2 (L + R)</span></div>
+    <div class="spec-row"><span class="sk">Drive</span><span class="sv">4WD DC</span></div>
+    <div class="spec-row"><span class="sk">Arm DoF</span><span class="sv">1 (servo)</span></div>
+    <div class="spec-row"><span class="sk">Effector</span><span class="sv">Pen/Marker</span></div>
+    <div class="spec-row"><span class="sk">Frame</span><span class="sv">Lego Technic</span></div>
+    <div class="spec-row"><span class="sk">Wheelbase</span><span class="sv">~280 mm</span></div>
+    <div class="spec-row"><span class="sk">Language</span><span class="sv">MicroPython</span></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title" style="color:#58a6ff;">Port Mapping</div>
+    <table class="pin-table">
+      <tr><th>Port / Pin</th><th>Component</th></tr>
+      <tr><td>SPIKE Port A</td><td class="wire-b">Ultrasonic L</td></tr>
+      <tr><td>SPIKE Port B</td><td class="wire-b">Ultrasonic R</td></tr>
+      <tr><td>SPIKE Port C</td><td class="wire-y">Motor L</td></tr>
+      <tr><td>SPIKE Port D</td><td class="wire-y">Motor R</td></tr>
+      <tr><td>SPIKE UART</td><td class="wire-g">LMS-ESP32</td></tr>
+      <tr><td>ESP32 I2C</td><td class="wire-p">HuskyLens v2</td></tr>
+      <tr><td>ESP32 PWM</td><td class="wire-w">Servo Motor</td></tr>
+    </table>
+  </div>
+
+</div>
+</div>
+
+</body>
+</html>
